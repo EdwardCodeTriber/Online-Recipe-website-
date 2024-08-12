@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "67a3",
+      "username": "Edward@gmail.com",
+      "name": "Edward",
+      "password": "1212"
+    },
+    {
+      "id": "1a64",
+      "username": "edwardthapelo55@gmail.com",
+      "name": "Edward",
+      "password": "1212"
+    }
+  ],
+  "recipes": []
+}
