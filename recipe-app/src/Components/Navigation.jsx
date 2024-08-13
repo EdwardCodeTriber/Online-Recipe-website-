@@ -33,7 +33,7 @@ const Navigation = (props) => {
 
   useEffect(() => {
     // Load the data from the JSON file
-    setRecipes(dataStorage.recipes); // Assuming the JSON has a `recipes` array
+    setRecipes(dataStorage.recipes); 
   }, []);
 
   const toggleModal = () => {
@@ -207,13 +207,17 @@ const Navigation = (props) => {
 
         {/* Displaying data from JSON */}
         <Box mt={2}>
-          <Typography variant="h6">Recipes:</Typography>
+          <Typography variant="h6">Your Recipes:</Typography>
           <List>
             {recipes.map((recipe, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={recipe.name}
-                  secondary={`Category: ${recipe.category}`}
+                  primary={recipe.recipename}
+                  secondary={`Ingredients: ${recipe.Ingredients}, 
+                  Instructions: ${recipe.Instructions},
+                  Preparation Time: ${recipe.Prepare},
+                  Cooking Time: ${recipe.Cookingtime},
+                  Servings Total: ${recipe.Servings}`} 
                 />
               </ListItem>
             ))}
