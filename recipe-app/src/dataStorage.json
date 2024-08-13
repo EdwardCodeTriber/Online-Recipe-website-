@@ -13,5 +13,38 @@
       "password": "1212"
     }
   ],
-  "recipes": []
+  "recipes": [
+    {
+      "id": "6ba5",
+      "recipename": "Burger",
+      "Ingredients": "beef, lettice, sauce, mayo, tomato, ring onions,",
+      "Instructions": "frey the beef, chop onions and tomato, sauce on top and mayo",
+      "Category": "",
+      "Prepare": "7",
+      "Cookingtime": "",
+      "Servings": "2",
+      "number": "15"
+    },
+    {
+      "id": "4edf",
+      "recipename": "Pizzer",
+      "Ingredients": "to, onions, beef , dough ,chees",
+      "Instructions": "oven 340°C, lay on top ",
+      "Category": "",
+      "Prepare": "30",
+      "Cookingtime": "24",
+      "Servings": "8",
+      "number": "15"
+    },
+    {
+      "id": "af56",
+      "recipename": "oats",
+      "Ingredients": "water/ milk",
+      "Instructions": "boil water, then pour oats then milk",
+      "Category": "",
+      "Prepare": "5",
+      "Cookingtime": "15",
+      "Servings": "5"
+    }
+  ]
 }

@@ -33,13 +33,14 @@ const Login = () => {
               user.username === registerdata.username &&
               user.password === registerdata.password
             ) {
-              localStorage.setItem(registerdata.username,registerdata.password);
+              localStorage.setItem(
+                registerdata.username,
+                registerdata.password
+              );
               alert("Succesfull login");
               navigate("/Navigation");
-            } else if(
-              registerdata.username !== "" &&
-              registerdata.password !== ""
-            ) {
+            } else {
+              registerdata.username !== "" && registerdata.password !== "";
               alert("Wrong Email Or Password");
             }
           });

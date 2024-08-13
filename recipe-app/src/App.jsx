@@ -5,6 +5,7 @@ import './App.css'
 import Navigation from './Components/Navigation'
 import Login from './Pages/login'
 import Register from './Pages/register'
+import Popadd from './Pages/Popadd'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Register' element={<Register/>}/>
       <Route path='/Navigation' element={<Navigation/>}/>
+      <Route path='/Popadd' element={<Popadd/>} />
     </Routes>
     </BrowserRouter>
      {/* <Navigation/> */}

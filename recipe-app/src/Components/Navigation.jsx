@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -8,8 +8,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-// import InboxIcon from "@mui/icons-material";
-// import MailIcon from "@mui/icons-material";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,16 +17,20 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import TextField from '@mui/material/TextField';
-
-
+import Button from "@mui/material/Button";
+import Popadd from "../Pages/Popadd"; // Ensure this is the correct path
 
 const drawerWidth = 240;
 
-function Navigation(props) {
+const Navigation = (props) => {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [popaddVisible, setPopaddVisible] = useState(false);
+
+  const toggleModal = () => {
+    setPopaddVisible(!popaddVisible);
+  };
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -45,8 +47,6 @@ function Navigation(props) {
     }
   };
 
-  
-
   const drawer = (
     <div>
       <Toolbar />
@@ -56,72 +56,58 @@ function Navigation(props) {
           <ListItemButton>
             <ListItemIcon>
               <HomeIcon />
-              Home
             </ListItemIcon>
-            <ListItemText />
+            <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText>
-              <ListItemIcon>
-                <FavoriteIcon />
-                Favourite
-              </ListItemIcon>
-            </ListItemText>
+            <ListItemIcon>
+              <FavoriteIcon />
+            </ListItemIcon>
+            <ListItemText primary="Favourite" />
           </ListItemButton>
         </ListItem>
-
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText>
-              <ListItemIcon>
-                <ReorderIcon />
-                Reciepe
-              </ListItemIcon>
-            </ListItemText>
+            <ListItemIcon>
+              <ReorderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Recipe" />
           </ListItemButton>
         </ListItem>
       </List>
       <Divider />
-      {/* Category for Breakfask, Lunch Dinner */}
-      <ListItem disablePadding>
+      <List>
+        <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText>
-              <ListItemIcon>
-                <ReorderIcon />
-                Breakfast
-              </ListItemIcon>
-            </ListItemText>
+            <ListItemIcon>
+              <ReorderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Breakfast" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText>
-              <ListItemIcon>
-                <ReorderIcon />
-                Lunch
-              </ListItemIcon>
-            </ListItemText>
+            <ListItemIcon>
+              <ReorderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Lunch" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText>
-              <ListItemIcon>
-                <ReorderIcon />
-                Dinner
-              </ListItemIcon>
-            </ListItemText>
+            <ListItemIcon>
+              <ReorderIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dinner" />
           </ListItemButton>
         </ListItem>
-      
+      </List>
     </div>
   );
 
-  // Remove this const when copying and pasting into your project.
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -153,7 +139,6 @@ function Navigation(props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
@@ -196,23 +181,22 @@ function Navigation(props) {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          {/* Show Content in a paper component */}
-          
-        </Typography>
-        <Typography paragraph>
-          {/* Show Content in a paper component */}
-        </Typography>
+        <div>
+          <Button
+            variant="outlined"
+            sx={{ width: 0.5, margin: "auto" }}
+            onClick={toggleModal}
+          >
+            Add Recipe
+          </Button>
+        </div>
+        <div >{popaddVisible && <Popadd />}</div>
       </Box>
     </Box>
   );
-}
+};
 
 // Navigation.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * Remove this when copying and pasting into your project.
-//    */
 //   window: PropTypes.func,
 // };
 

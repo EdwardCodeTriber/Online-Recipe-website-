@@ -1,26 +1,27 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 const Popadd = () => {
-
- 
-  const [tasks, setTask] = useState({
+    
+  const navigate = useNavigate();
+  const [recipe, setRecipe] = useState({
     recipename: "",
     Ingredients: "",
     Instructions: "",
-    Category:"",
-    Prepare:"",
-    Cookingtime
-
+    Category: "",
+    Prepare: "",
+    Cookingtime: "",
+    Servings: "",
   });
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = React.useState("");
 
   const handleChange = (event) => {
     setCategory(event.target.value);
@@ -28,15 +29,16 @@ const Popadd = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    if (tasks.task === "") {
+    if (recipe.recipename === "") {
       alert("Task cannot be empty?");
     } else {
       // alert("Something is wron with code or button");
-        axios
-        .post("http://localhost:3000/Tasks", tasks)
+      axios
+        .post("http://localhost:3000/recipes", recipe)
         .then((result) => {
           console.log(result);
-          alert("Task saved successfully");
+          alert("Recipe saved successfully");
+          navigate("/Navigation");
         })
         .catch((err) => console.log(err));
     }
@@ -51,76 +53,103 @@ const Popadd = () => {
           sx={{
             p: "2px 4px",
             display: "flex",
-            flexDirection:"column",
+            flexDirection: "column",
             alignItems: "center",
             width: 400,
-            height: 450,
+            height: 550,
             gap: 1,
           }}
         >
           <TextField
-          sx={{
-            margin:"auto"
-          }}
-          required
-          id="filled-required"
-          label="Recipe"
-        //   defaultValue="Hello World"
-          variant="filled"
-        />
-          
+            sx={{
+              margin: "auto",
+            }}
+            required
+            id="filled-required"
+            label="Recipe"
+            onChange={(e) =>
+              setRecipe({ ...recipe, recipename: e.target.value })
+            }
+            variant="filled"
+          />
+
           <TextField
-          sx={{
-            margin:"auto"
-          }}
-          id="outlined-multiline-static"
-          label="Ingredients"
-          multiline
-          rows={1}
-        //   defaultValue="Default Value"
-        />
-        <TextField
-        sx={{
-            margin:"auto"
-          }}
-          id="outlined-multiline-static"
-          label="Instructions"
-          multiline
-          rows={1}
-        //   defaultValue="Default Value"
-        />
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-        <Select
-          sx={{
-            margin:"auto",
-            width:0.5,
-          }}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={category}
-          label="category"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Dessert</MenuItem>
-          <MenuItem value={20}>Main Course</MenuItem>
-          <MenuItem value={30}>Appetiser</MenuItem>
-        </Select>
-        <TextField
-          id="filled-number"
-          label="Cooking-Time in minutes"
-          type="number"
-          onChange={(e) => setTask({ ...tasks, task: e.target.value })}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="filled"
-        />
-          
-          
+            sx={{
+              margin: "auto",
+            }}
+            id="outlined-multiline-static"
+            label="Ingredients"
+            multiline
+            rows={1}
+            onChange={(e) =>
+              setRecipe({ ...recipe, Ingredients: e.target.value })
+            }
+          />
+          <TextField
+            sx={{
+              margin: "auto",
+            }}
+            id="outlined-multiline-static"
+            label="Instructions"
+            multiline
+            rows={1}
+            onChange={(e) =>
+              setRecipe({ ...recipe, Instructions: e.target.value })
+            }
+          />
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            sx={{
+              margin: "auto",
+              width: 0.5,
+            }}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={category}
+            label="category"
+            onChange={handleChange}
+          >
+            <MenuItem value="Dessert">Dessert</MenuItem>
+            <MenuItem value="Main Course">Main Course</MenuItem>
+            <MenuItem value="Appetiser">Appetiser</MenuItem>
+          </Select>
+          <TextField
+            id="filled-number"
+            label="Cooking-Time in minutes"
+            type="number"
+            onChange={(e) =>
+              setRecipe({ ...recipe, Cookingtime: e.target.value })
+            }
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="filled"
+          />
+          <TextField
+            id="filled-number"
+            label="Preparation in minutes"
+            type="number"
+            onChange={(e) => setRecipe({ ...recipe, Prepare: e.target.value })}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="filled"
+          />
+          <TextField
+            id="filled-number"
+            label="Servings"
+            type="number"
+            onChange={(e) => setRecipe({ ...recipe, Servings: e.target.value })}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="filled"
+          />
+
           {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
           {/* <button type="submit"> add</button> */}
           <IconButton type="submit" sx={{ p: "10px" }} aria-label="add">
-            <AddIcon/>
+            <AddIcon />
           </IconButton>
         </Paper>
       </form>
