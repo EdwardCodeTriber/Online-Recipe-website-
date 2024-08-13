@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import dataStorage from "../dataStorage.json";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
 
 const Popedit = () => {
-    
-
   const [recipes, setRecipes] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  useEffect(() => {
+    // Load the data from the server
+    axios
+      .get("http://localhost:3000/recipes")
+      .then((res) => {
+        setRecipes(res.data);
+      })
+      .catch((err) => console.error("Error fetching recipes:", err));
+  }, []);
 
   const handleEditClick = (recipe) => {
     setSelectedRecipe(recipe);
@@ -29,20 +40,32 @@ const Popedit = () => {
   };
 
   const handleSaveEdit = () => {
-    setRecipes((prevRecipes) =>
-      prevRecipes.map((recipe) =>
-        recipe.recipename === selectedRecipe.recipename
-          ? selectedRecipe
-          : recipe
-      )
-    );
-    setEditMode(false);
+    axios
+      .put(`http://localhost:3000/recipes/ ${selectedRecipe.recipename}`, selectedRecipe)
+      .then((res) => {
+        setRecipes((prevRecipes) =>
+          prevRecipes.map((recipe) =>
+            recipe.recipename === selectedRecipe.recipename
+              ? selectedRecipe
+              : recipe
+          )
+        );
+        setEditMode(false);
+      })
+      .catch((err) => console.error("Error updating recipe:", err));
   };
 
-  useEffect(() => {
-    // Load the data from the JSON file
-    setRecipes(dataStorage.recipes);
-  }, []);
+  const handleDeleteClick = (recipeName) => {
+    axios
+      .delete(`http://localhost:3000/recipes/ ${recipeName}`)
+      .then((res) => {
+        setRecipes((prevRecipes) =>
+          prevRecipes.filter((recipe) => recipe.recipename !== recipeName)
+        );
+      })
+      .catch((err) => console.error("Error deleting recipe:", err));
+  };
+
   return (
     <div>
       {/* Displaying and Editing Recipes */}
@@ -53,16 +76,32 @@ const Popedit = () => {
             {recipes.map((recipe, index) => (
               <ListItem
                 key={index}
-                button
-                onClick={() => handleEditClick(recipe)}
+                secondaryAction={
+                  <>
+                    <IconButton
+                      edge="end"
+                      aria-label="edit"
+                      onClick={() => handleEditClick(recipe)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDeleteClick(recipe.recipename)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                }
               >
                 <ListItemText
                   primary={recipe.recipename}
                   secondary={`Ingredients: ${recipe.Ingredients}, 
-                    Instructions: ${recipe.Instructions},
-                    Preparation Time: ${recipe.Prepare},
-                    Cooking Time: ${recipe.Cookingtime},
-                    Servings Total: ${recipe.Servings}`}
+                      Instructions: ${recipe.Instructions},
+                      Preparation Time: ${recipe.Prepare},
+                      Cooking Time: ${recipe.Cookingtime},
+                      Servings Total: ${recipe.Servings}`}
                 />
               </ListItem>
             ))}
@@ -119,20 +158,23 @@ const Popedit = () => {
                 fullWidth
                 margin="normal"
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSaveEdit}
-              >
-                Save
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => setEditMode(false)}
-              >
-                Cancel
-              </Button>
+              <Box mt={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSaveEdit}
+                  sx={{ marginRight: 2 }}
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel
+                </Button>
+              </Box>
             </form>
           </Box>
         )}
