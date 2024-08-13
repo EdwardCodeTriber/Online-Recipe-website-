@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -19,6 +19,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Popadd from "../Pages/Popadd"; // Ensure this is the correct path
+import Search from "./Search";
+import dataStorage from "../dataStorage.json";
 
 const drawerWidth = 240;
 
@@ -27,6 +29,12 @@ const Navigation = (props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [popaddVisible, setPopaddVisible] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    // Load the data from the JSON file
+    setRecipes(dataStorage.recipes); // Assuming the JSON has a `recipes` array
+  }, []);
 
   const toggleModal = () => {
     setPopaddVisible(!popaddVisible);
@@ -134,6 +142,7 @@ const Navigation = (props) => {
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -172,6 +181,7 @@ const Navigation = (props) => {
           {drawer}
         </Drawer>
       </Box>
+
       <Box
         component="main"
         sx={{
@@ -181,16 +191,34 @@ const Navigation = (props) => {
         }}
       >
         <Toolbar />
-        <div>
-          <Button
-            variant="outlined"
-            sx={{ width: 0.5, margin: "auto" }}
-            onClick={toggleModal}
-          >
-            Add Recipe
-          </Button>
-        </div>
-        <div >{popaddVisible && <Popadd />}</div>
+        <Box sx={{ position: "absolute", flexGrow: 1 }}>
+          <Search />
+        </Box>
+        <br />
+        <Button
+          variant="outlined"
+          sx={{ width: 0.5, margin: "auto" }}
+          onClick={toggleModal}
+        >
+          Add Recipe
+        </Button>
+        <br />
+        <div>{popaddVisible && <Popadd />}</div>
+
+        {/* Displaying data from JSON */}
+        <Box mt={2}>
+          <Typography variant="h6">Recipes:</Typography>
+          <List>
+            {recipes.map((recipe, index) => (
+              <ListItem key={index}>
+                <ListItemText
+                  primary={recipe.name}
+                  secondary={`Category: ${recipe.category}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Box>
     </Box>
   );
