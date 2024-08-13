@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,9 +17,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Popadd from "../Pages/Popadd"; // Ensure this is the correct path
+import Popadd from "../Pages/Popadd"; 
 import Search from "./Search";
-import dataStorage from "../dataStorage.json";
+import Popedit from "../Pages/Popedit";
+
 
 const drawerWidth = 240;
 
@@ -29,12 +29,7 @@ const Navigation = (props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [popaddVisible, setPopaddVisible] = useState(false);
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    // Load the data from the JSON file
-    setRecipes(dataStorage.recipes); 
-  }, []);
+  
 
   const toggleModal = () => {
     setPopaddVisible(!popaddVisible);
@@ -115,7 +110,8 @@ const Navigation = (props) => {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -191,10 +187,12 @@ const Navigation = (props) => {
         }}
       >
         <Toolbar />
-        <Box sx={{ position: "absolute", flexGrow: 1 }}>
+        <Box sx={{ position: "relative", flexGrow: 1 }}>
           <Search />
         </Box>
         <br />
+        <br/>
+        <br/>
         <Button
           variant="outlined"
           sx={{ width: 0.5, margin: "auto" }}
@@ -202,27 +200,14 @@ const Navigation = (props) => {
         >
           Add Recipe
         </Button>
+        <Typography paragraph>
+
+        </Typography>
         <br />
         <div>{popaddVisible && <Popadd />}</div>
-
-        {/* Displaying data from JSON */}
-        <Box mt={2}>
-          <Typography variant="h6">Your Recipes:</Typography>
-          <List>
-            {recipes.map((recipe, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={recipe.recipename}
-                  secondary={`Ingredients: ${recipe.Ingredients}, 
-                  Instructions: ${recipe.Instructions},
-                  Preparation Time: ${recipe.Prepare},
-                  Cooking Time: ${recipe.Cookingtime},
-                  Servings Total: ${recipe.Servings}`} 
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+        <box>
+          {/* {<Popedit/>} */}
+        </box>
       </Box>
     </Box>
   );
