@@ -6,5 +6,4 @@
 # Logged in users
 -They can view recipes that are available for all users. -They can add, delete, update and view their favourite dishes.
 
-# OPTIONAL
--They can share Their recipes or Dishes to the application
+
