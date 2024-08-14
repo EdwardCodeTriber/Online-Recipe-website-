@@ -19,7 +19,7 @@ const Popedit = () => {
   useEffect(() => {
     // Load the data from the server
     axios
-      .get("http://localhost:3000/recipes")
+      .get("http://localhost:8000/recipes")
       .then((res) => {
         setRecipes(res.data);
       })
@@ -41,26 +41,25 @@ const Popedit = () => {
 
   const handleSaveEdit = () => {
     axios
-      .put(`http://localhost:3000/recipes/ ${selectedRecipe.recipename}`, selectedRecipe)
+      .put(`http://localhost:8000/recipes/${selectedRecipe.id}`, selectedRecipe)
       .then((res) => {
         setRecipes((prevRecipes) =>
           prevRecipes.map((recipe) =>
-            recipe.recipename === selectedRecipe.recipename
-              ? selectedRecipe
-              : recipe
+            recipe.id === selectedRecipe.id ? selectedRecipe : recipe
           )
         );
+        alert("Successfully updated the Recipe");
         setEditMode(false);
       })
       .catch((err) => console.error("Error updating recipe:", err));
   };
 
-  const handleDeleteClick = (recipeName) => {
+  const handleDeleteClick = (recipeId) => {
     axios
-      .delete(`http://localhost:3000/recipes/ ${recipeName}`)
+      .delete(`http://localhost:8000/recipes/${recipeId}`)
       .then((res) => {
         setRecipes((prevRecipes) =>
-          prevRecipes.filter((recipe) => recipe.recipename !== recipeName)
+          prevRecipes.filter((recipe) => recipe.id !== recipeId)
         );
       })
       .catch((err) => console.error("Error deleting recipe:", err));
@@ -88,7 +87,7 @@ const Popedit = () => {
                     <IconButton
                       edge="end"
                       aria-label="delete"
-                      onClick={() => handleDeleteClick(recipe.recipename)}
+                      onClick={() => handleDeleteClick(recipe.id)}
                     >
                       <DeleteIcon />
                     </IconButton>

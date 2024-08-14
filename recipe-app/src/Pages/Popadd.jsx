@@ -34,7 +34,7 @@ const Popadd = () => {
     } else {
       // alert("Something is wron with code or button");
       axios
-        .post("http://localhost:3000/recipes", recipe)
+        .post("http://localhost:8000/recipes", recipe)
         .then((result) => {
           console.log(result);
           alert("Recipe saved successfully");
