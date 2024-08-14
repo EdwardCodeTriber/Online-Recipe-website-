@@ -34,7 +34,7 @@ const Register = () => {
 
       console.log(registerdata);
       axios
-        .post("http://localhost:3000/users", registerdata)
+        .post("http://localhost:8000/users", registerdata)
         .then((result) => console.log(result))
         .catch((err) => console.log(err));
       navigate("/Login");
@@ -45,7 +45,7 @@ const Register = () => {
     <>
       <form onSubmit={handleSubmit} className="form-register">
         <Box
-          height={400}
+          height={420}
           width={400}
           margin="auto"
           my={4}
@@ -111,10 +111,10 @@ const Register = () => {
 
           <div className="links">
             <br />
-            <Button variant="outlined" type="submit">
+            <Button variant="outlined" type="submit" sx={{margin:"auto"}}>
               Register
             </Button>
-            <Link to="/Login"> Cancle</Link>
+            <Link to="/Login" > Cancle</Link>
           </div>
         </Box>
       </form>

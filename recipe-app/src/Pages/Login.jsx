@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import "./css.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = () => {
       alert("password required");
     } else {
       axios
-        .get("http://localhost:3000/users")
+        .get("http://localhost:8000/users")
         .then((result) => {
           result.data.map((user) => {
             console.log(result);
@@ -51,7 +52,7 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form-login">
+      <form onSubmit={handleSubmit} autoComplete="off" className="form-login">
         <Box
           height={400}
           width={400}
@@ -70,6 +71,7 @@ const Login = () => {
 
           <div className="TextField">
             <TextField
+              sx={{color:"black"}}
               id="input-with-icon-textfield"
               label="Account"
               name="username"
@@ -106,7 +108,7 @@ const Login = () => {
           <div className="links">
             <br />
 
-            <Button variant="outlined" type="submit">
+            <Button variant="outlined" type="submit" sx={{margin:"auto"}}>
               Sign In
             </Button>
           </div>

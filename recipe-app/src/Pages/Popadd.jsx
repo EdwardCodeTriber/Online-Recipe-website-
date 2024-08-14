@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
@@ -10,7 +10,6 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 const Popadd = () => {
-    
   const navigate = useNavigate();
   const [recipe, setRecipe] = useState({
     recipename: "",
@@ -21,18 +20,21 @@ const Popadd = () => {
     Cookingtime: "",
     Servings: "",
   });
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = useState("");
 
   const handleChange = (event) => {
     setCategory(event.target.value);
+    setRecipe((prevRecipe) => ({
+      ...prevRecipe,
+      Category: event.target.value,
+    }));
   };
 
   const handleForm = (e) => {
     e.preventDefault();
     if (recipe.recipename === "") {
-      alert("Task cannot be empty?");
+      alert("Recipe name cannot be empty");
     } else {
-      // alert("Something is wron with code or button");
       axios
         .post("http://localhost:8000/recipes", recipe)
         .then((result) => {
@@ -146,8 +148,6 @@ const Popadd = () => {
             variant="filled"
           />
 
-          {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
-          {/* <button type="submit"> add</button> */}
           <IconButton type="submit" sx={{ p: "10px" }} aria-label="add">
             <AddIcon />
           </IconButton>

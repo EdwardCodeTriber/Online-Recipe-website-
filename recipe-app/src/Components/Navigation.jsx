@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ReorderIcon from "@mui/icons-material/Reorder";
@@ -20,6 +21,7 @@ import Button from "@mui/material/Button";
 import Popadd from "../Pages/Popadd"; 
 import Search from "./Search";
 import Popedit from "../Pages/Popedit";
+import { Link } from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -54,7 +56,15 @@ const Navigation = (props) => {
     <div>
       <Toolbar />
       <Divider />
-      <List>
+      <List sx={{}}>
+      <ListItem disablePadding >
+          <ListItemButton>
+            <ListItemIcon>
+              <LoginIcon />
+            </ListItemIcon>
+            <Link to="/Login"><ListItemText primary="SignIn" /></Link>
+          </ListItemButton>
+        </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -188,7 +198,7 @@ const Navigation = (props) => {
       >
         <Toolbar />
         <Box sx={{ position: "relative", flexGrow: 1 }}>
-          <Search />
+          {/* <Search /> */}
         </Box>
         <br />
         <br/>
@@ -197,6 +207,7 @@ const Navigation = (props) => {
           variant="outlined"
           sx={{ width: 0.5, margin: "auto" }}
           onClick={toggleModal}
+          color="success"
         >
           Add Recipe
         </Button>
@@ -206,15 +217,13 @@ const Navigation = (props) => {
         <br />
         <div>{popaddVisible && <Popadd />}</div>
         <box>
-          {/* {<Popedit/>} */}
+          {<Popedit/>}
         </box>
       </Box>
     </Box>
   );
 };
 
-// Navigation.propTypes = {
-//   window: PropTypes.func,
-// };
+
 
 export default Navigation;

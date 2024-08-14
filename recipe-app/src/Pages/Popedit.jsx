@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 import axios from "axios";
 
 const Popedit = () => {
@@ -48,7 +51,7 @@ const Popedit = () => {
             recipe.id === selectedRecipe.id ? selectedRecipe : recipe
           )
         );
-        alert("Successfully updated the Recipe");
+        alert("Recipe was successfully Updated.");
         setEditMode(false);
       })
       .catch((err) => console.error("Error updating recipe:", err));
@@ -61,6 +64,7 @@ const Popedit = () => {
         setRecipes((prevRecipes) =>
           prevRecipes.filter((recipe) => recipe.id !== recipeId)
         );
+        alert("You have Successully Deleted the Recipe")
       })
       .catch((err) => console.error("Error deleting recipe:", err));
   };
@@ -69,8 +73,9 @@ const Popedit = () => {
     <div>
       {/* Displaying and Editing Recipes */}
       <Box mt={2}>
-        <Typography variant="h6">Your Recipes:</Typography>
+        <Typography variant="h6" >Your Recipes:</Typography>
         {!editMode ? (
+          <Paper elavation={2} sx={{}}>
           <List>
             {recipes.map((recipe, index) => (
               <ListItem
@@ -98,6 +103,7 @@ const Popedit = () => {
                   primary={recipe.recipename}
                   secondary={`Ingredients: ${recipe.Ingredients}, 
                       Instructions: ${recipe.Instructions},
+                      Category:${recipe.Category},
                       Preparation Time: ${recipe.Prepare},
                       Cooking Time: ${recipe.Cookingtime},
                       Servings Total: ${recipe.Servings}`}
@@ -105,6 +111,7 @@ const Popedit = () => {
               </ListItem>
             ))}
           </List>
+          </Paper>
         ) : (
           <Box>
             <Typography variant="h6">Edit Recipe</Typography>
@@ -129,6 +136,14 @@ const Popedit = () => {
                 label="Instructions"
                 name="Instructions"
                 value={selectedRecipe.Instructions}
+                onChange={handleInputChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Category"
+                name="Category"
+                value={selectedRecipe.Category}
                 onChange={handleInputChange}
                 fullWidth
                 margin="normal"
