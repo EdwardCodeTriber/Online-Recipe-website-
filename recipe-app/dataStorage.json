@@ -11,6 +11,36 @@
       "username": "edwardthapelo55@gmail.com",
       "name": "Edward",
       "password": "1212"
+    },
+    {
+      "id": "c5ee",
+      "name": "Edward",
+      "email": "edwardthapelo@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "5c7d",
+      "name": "Edward",
+      "email": "edwardthapelo@gmail.com",
+      "password": "1515"
+    },
+    {
+      "id": "ed95",
+      "name": "Thapelo",
+      "email": "thapelo@gmail.com",
+      "password": "159"
+    },
+    {
+      "id": "5617",
+      "name": "seth",
+      "email": "seth@gmail.com",
+      "password": "seth"
+    },
+    {
+      "id": "117b",
+      "name": "guy",
+      "email": "guy@gmail.com",
+      "password": "guy"
     }
   ],
   "recipes": [
